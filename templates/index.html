@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+      <input type="button" onclick="location.href='/post';" value="Make a Tweet">
+  {% for tweet in tweets %}
+    <ul>
+      <li><a href="/user/{{tweet.author.username}}">@{{tweet.author.username}}</a> - <a href="/status/{{tweet.id}}">{{tweet.tweet_date}}</a>
+        <ul>
+          <li>
+            {{tweet.content}}
+          </li>
+        </ul>
+      </li>
+    </ul>
+  {% endfor %}
+  <input type="button" onclick='location.href="/logout";' value="Logout">
+{% endblock %}

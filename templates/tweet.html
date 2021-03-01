@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<ul>
+  <li><a href="/user/{{tweet.author.username}}">@{{tweet.author.username}}</a> - {{tweet.tweet_date}}
+    <ul>
+      <li>
+        {{tweet.content}}
+      </li>
+    </ul>
+  </li>
+</ul>
+<input type="button" onclick="location.href='/'" value="Home">
+{% endblock %}

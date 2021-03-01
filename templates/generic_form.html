@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="{{input_value}}">
+</form>
+{% if signup_flag %}
+<input type="button" onclick="location.href='/signup';" value="Sign Up">
+{% endif %}
+{% endblock %}
