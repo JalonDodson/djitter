@@ -31,8 +31,10 @@ def home_view(request):
 def follow_view(request, username):
     follow_user = TwitterUser.objects.get(username=username)
     follow_from = TwitterUser.objects.get(username=request.user.username)
+    
     follow_user.followers.add(follow_from)
     follow_from.following.add(follow_user)
+
     follow_user.save()
     follow_from.save()
     return redirect(reverse("user", args=(username,)))

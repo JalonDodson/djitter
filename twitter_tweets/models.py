@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils import timezone
+from django.utils.timezone import now
 # import pytz
 from twitter_user.models import TwitterUser
 # Create your models here.
@@ -14,4 +14,4 @@ class Tweet(models.Model):
         blank=True)
     content = models.TextField(max_length=140)
     likes = models.IntegerField(default=0)
-    tweet_date = models.DateTimeField(default=timezone.now)
+    tweet_date = models.DateTimeField(default=now)
