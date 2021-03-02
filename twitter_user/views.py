@@ -29,31 +29,36 @@ def home_view(request):
 
 @login_required()
 def follow_view(request, username):
-    to_follow = TwitterUser.objects.get(username=username)
+    follow_user = TwitterUser.objects.get(username=username)
     follow_from = TwitterUser.objects.get(username=request.user.username)
-
-    to_follow.followers.add(follow_from)
-    follow_from.following.add(to_follow)
+    follow_user.followers.add(follow_from)
+    follow_from.following.add(follow_user)
+    follow_user.save()
+    follow_from.save()
     return redirect(reverse("user", args=(username,)))
 
 
 @login_required()
 def unfollow_view(request, username):
-    to_unfollow = TwitterUser.objects.get(username=username)
+    unfollow_user = TwitterUser.objects.get(username=username)
     unfollow_from = TwitterUser.objects.get(username=request.user.username)
 
-    to_unfollow.followers.remove(unfollow_from)
-    unfollow_from.following.remove(to_unfollow)
+    unfollow_user.followers.remove(unfollow_from)
+    unfollow_from.following.remove(unfollow_user)
+
+    unfollow_user.save()
+    unfollow_from.save()
     return redirect(reverse("user", args=(username,)))
 
 
 def user_view(request, username):
     user = TwitterUser.objects.get(username=username)
     tweets = Tweet.objects.filter(author=user)
-    follow_count = TwitterUser.objects.get(id=user.id).following.all()
+    follow_count = TwitterUser.objects.get(id=user.id).followers.all()
     if request.user.is_authenticated:
-        c = TwitterUser.objects.get(id=user.id)
-        is_following = (TwitterUser.objects.get(id=c.id).following.filter(id=user.id))
+        is_following = (
+            TwitterUser.objects.get(id=user.id).followers.filter(
+                id=request.user.id))
     else:
         is_following = False
     return render(request,

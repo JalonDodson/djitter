@@ -23,7 +23,7 @@
     {% endfor %}
   </ul>
 </div>
-{% if request.user.username != username %}
+{% if request.user.is_authenticated and request.user.username != username %}
 {% if is_following %}
   <input type="button" onclick="location.href='/unfollow/{{username}}';" value="Unfollow">
 {% else %}
