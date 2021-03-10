@@ -26,8 +26,8 @@ def login_view(request):
                 login(request, user)
                 return redirect(reverse("homepage"))
     form = LogInForm()
-    return render(request, "generic_form.html",
-                  {"form": form, "input_value": "Log In", "signup_flag": True})
+    return render(request, "auth/splash.html",
+                  {"form": form})
 
 
 def logout_view(request):
