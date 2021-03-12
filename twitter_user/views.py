@@ -1,33 +1,30 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.views.generic import View
+
 from twitter_tweets.forms import TweetForm
 from twitter_tweets.models import Tweet
 from twitter_user.models import TwitterUser
 from twitter_notifications.models import Notification
 
 
-@login_required()
-def home_view(request):
-    self_tweets = Tweet.objects.filter(author=request.user)
-    f = TwitterUser.objects.get(id=request.user.id).following.all()
-    f_t = Tweet.objects.filter(author__username__in=[x.username for x in f])
-    tweets = list(self_tweets) + list(f_t)
-    tweets.sort(key=lambda x: x.tweet_date, reverse=True)
-    if request.method == "POST":
-        form = TweetForm(request.POST)
-        if form.is_valid():
-            d = form.cleaned_data
-            Tweet.objects.create(author=request.user, content=d["content"])
-            return redirect(reverse("homepage"))
-    form = TweetForm()
-    return render(request,
-                  "index.html",
-                  {"form": form,
-                   "tweets": tweets})
+class HomeView(View):
+    def get(self, request):
+        if request.user.is_authenticated:
+            self_tweets = Tweet.objects.filter(author=request.user)
+            f = TwitterUser.objects.get(id=request.user.id).following.all()
+            f_t = Tweet.objects.filter(author__username__in=[x.username for x in f])
+
+            tweets = list(self_tweets) + list(f_t)
+            tweets.sort(key=lambda x: x.tweet_date, reverse=True)
+            
+            form = TweetForm()
+            return render(request, "index.html", {"form": form, "tweets": tweets})
+        return render(request, "auth/splash.html")
 
 
-@login_required()
+@login_required(redirect_field_name="homepage")
 def follow_view(request, username):
     follow_user = TwitterUser.objects.get(username=username)
     follow_from = TwitterUser.objects.get(username=request.user.username)
@@ -40,7 +37,7 @@ def follow_view(request, username):
     return redirect(reverse("user", args=(username,)))
 
 
-@login_required()
+@login_required(redirect_field_name="homepage")
 def unfollow_view(request, username):
     unfollow_user = TwitterUser.objects.get(username=username)
     unfollow_from = TwitterUser.objects.get(username=request.user.username)
