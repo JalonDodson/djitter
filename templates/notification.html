@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if unread %}
+{% for n in unread %}
+<ul>
+  <li><a href="/user/{{n.tweet.author.username}}">@{{n.tweet.author.username}}</a> - <a href="/status/{{n.tweet.id}}">{{n.tweet.tweet_date}}</a>
+    <ul>
+      <li>
+        {{n.tweet.content}}
+      </li>
+    </ul>
+  </li>
+</ul>
+{% endfor %}
+{% else %}
+<h5>You don't have any notifications! How about <a class="link" href="/post">Sending a Tweet?</a></h5>
+{% endif %}
+{% endblock %}

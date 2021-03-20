@@ -1,0 +1,52 @@
+{% load static %}
+<form method="POST">
+    {% csrf_token %}
+<div class="modal {{ s_type }}" id="signup-modal" tabindex="-1" aria-labelledby="signupModal" aria-hidden="true" style="display: {{ d_type }}">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <img src="{% static 'favicon.ico' %}" id="djitter-icon">
+            <div class="modal-header">
+                <h5 class="modal-title" id="signupModalTitle">Create your account</h5>
+            </div>
+            <div class="modal-body">
+                <div class="su-input-wrp">
+                    {{ form.username }}
+                    {% if error_type == "invalid_name" %}
+                    <span class="name-label text-danger">Username</span>
+                    <span class="text-danger">Invalid username used! 48 characters or less.</span>
+                    {% else %}
+                    <span class="name-label">Username</span>
+                    {% endif %}
+                    <br>
+                    {{ form.number }}
+                    <span class="num-label">Phone</span>
+                    {% if error_type == "invalid_num" %}
+                    <span class="num-label text-danger">Phone</span>
+                    <span class="text-danger">Invalid phone number! Use format 123-456-7890.</span>
+                    {% else %}
+                    <span class="num-label">Phone</span>
+                    {% endif %}
+                    <br>
+                    {{ form.password }}
+                    <span class="pw-label">Password</span>
+                    <br>
+                    <h6 style="font-weight: bold;">Date of birth</h6>
+                    <span id="helper-text">This will not be shown publicly. Confirm your own age, even if this account is for<br> a cult, pet turtle, or something else.</span>
+                    <div class="dob">
+                        {{ form.month }}
+                        <span class="ml">Month</span>&nbsp;
+                        {{ form.day }}
+                        <span class="dl">Day</span>&nbsp;
+                        {{ form.year }}
+                        <span class="yl">Year</span>
+                    </div>
+                    </div>
+                </div>
+                <div class="modal-footer">    
+                    <button type="submit" id="signup-nxt" class="btn btn-primary">Sign up</button>
+                </div>
+                <br><br><br>
+            </div>
+        </div>
+    </div>
+</form>
