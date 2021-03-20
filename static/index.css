@@ -1,0 +1,29 @@
+@media (min-width: 768px) {
+    .modal-xl {
+        top: 145px;
+        width: 90%;
+        max-width:600px;
+        border-radius: 15px !important; 
+        border: 1px;
+    }
+    .modal-header {
+        border: none !important;
+    }
+    .modal-footer {
+        border: none !important;
+    }
+  }
+
+.modal-content {
+    -webkit-border-radius: 15px !important;
+    -moz-border-radius: 15px !important;
+    border-radius: 15px !important; 
+    border: none !important;
+}
+
+#djitter-icon {
+    margin: 0 auto;
+    margin-top: 2%;
+    width: 5%;
+    height: 5%;
+}

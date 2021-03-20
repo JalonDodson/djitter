@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
-{% block content %}
-      <input type="button" onclick="location.href='/post';" value="Make a Tweet">
+{% load static %}
+<head>
+  <link rel="stylesheet" href="{% static 'index.css' %}">
+</head>
+{% block content %}   
+<input type="button" onclick="location.href='/post';" value="Make a Tweet">
   {% for tweet in tweets %}
     <ul>
       <li><a href="/user/{{tweet.author.username}}">@{{tweet.author.username}}</a> - <a href="/status/{{tweet.id}}">{{tweet.tweet_date}}</a>
@@ -12,4 +16,5 @@
       </li>
     </ul>
   {% endfor %}
+  {% include 'components/picture_modal.html' %}
 {% endblock %}

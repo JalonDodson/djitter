@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from twitter_user.views import HomeView, follow_view, unfollow_view, user_view, notif_view
+from twitter_user.views import follow_view, unfollow_view, user_view, notif_view
 from twitter_tweets.views import tweet_view, like_view, post_view
 from twitter_auth.views import SignupView, LoginView, SplashView, logout_view
 

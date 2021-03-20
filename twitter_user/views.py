@@ -21,7 +21,7 @@ class HomeView(View):
             
             form = TweetForm()
             return render(request, "index.html", {"form": form, "tweets": tweets})
-        return render(request, "auth/splash.html")
+        return redirect(reverse("splash"))
 
 
 @login_required(redirect_field_name="homepage")

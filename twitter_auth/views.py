@@ -41,32 +41,36 @@ class LoginView(View):
 
 class SplashView(View):
     def post(self, request):
-        form = SignupForm(request.POST)
-        if form.is_valid():
-            data = form.cleaned_data
-            
-            number = data["number"].replace('-','').replace('(','').replace(')','')
-            ph = phonenumbers.parse(number, "US")
-            valid_num = phonenumbers.is_valid_number(ph)
-            if not valid_num:
-                messages.error(request, "Invalid phone number, use format: 123-456-7890")
-                form = SignupForm()
-                return render(request, "auth/splash.html", {"form": form, "reg_error": "invalid_num"})
-            dob = datetime.date(int(data["year"]), int(data["month"]), int(data["day"]))
-            user = TwitterUser.objects.create_user(
-                                            username=data["username"],
-                                            password=data["password"],
-                                            dob=dob,
-                                            number=ph.national_number)
-            x = authenticate(request, username=data["username"], password=data["password"])
-            if x:
-                login(request, user)
-                return redirect(reverse("homepage"))
+        if not request.user.is_authenticated:
+            form = SignupForm(request.POST)
+            if form.is_valid():
+                data = form.cleaned_data
+                
+                number = data["number"].replace('-','').replace('(','').replace(')','')
+                ph = phonenumbers.parse(number, "US")
+                valid_num = phonenumbers.is_valid_number(ph)
+                if not valid_num:
+                    messages.error(request, "Invalid phone number, use format: 123-456-7890")
+                    form = SignupForm()
+                    return render(request, "auth/splash.html", {"form": form, "reg_error": "invalid_num"})
+                dob = datetime.date(int(data["year"]), int(data["month"]), int(data["day"]))
+                user = TwitterUser.objects.create_user(
+                                                username=data["username"],
+                                                password=data["password"],
+                                                dob=dob,
+                                                number=ph.national_number)
+                x = authenticate(request, username=data["username"], password=data["password"])
+                if x:
+                    login(request, user)
+                    return redirect(reverse("homepage"))
+        
             
 
     def get(self, request):
-        form = SignupForm()
-        return render(request, "auth/splash.html", {"form": form})
+        if not request.user.is_authenticated:
+            form = SignupForm()
+            return render(request, "auth/splash.html", {"form": form})
+        return render(request, "index.html", {})
 
 
 def logout_view(request):

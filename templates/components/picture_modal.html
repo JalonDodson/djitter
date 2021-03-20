@@ -1,0 +1,23 @@
+{% load static %}
+<head>
+    <link rel="stylesheet" href="{% static 'index.css' %}">
+</head>
+<form method="POST">
+    {% csrf_token %}
+<div class="modal show fade" id="signup-modal" tabindex="-1" aria-labelledby="signupModal" aria-hidden="true" style="display: block">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <img src="{% static 'favicon.ico' %}" id="djitter-icon">
+            <div class="modal-header">
+                <h5 class="modal-title" id="signupModalTitle">Create your account</h5>
+            </div>
+            <div class="modal-body">
+
+                <div class="modal-footer">    
+                    <button type="submit" id="signup-nxt" class="btn btn-primary">Sign up</button>
+                </div>
+                <br><br><br>
+            </div>
+        </div>
+    </div>
+</form>
