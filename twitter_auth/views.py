@@ -58,7 +58,7 @@ class SplashView(View):
                                                 username=data["username"],
                                                 password=data["password"],
                                                 dob=dob,
-                                                number=ph.national_number)
+                                                number=str(ph.national_number))
                 x = authenticate(request, username=data["username"], password=data["password"])
                 if x:
                     login(request, user)

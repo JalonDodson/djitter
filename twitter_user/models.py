@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractUser
 
 class TwitterUser(AbstractUser):
     display = models.CharField(max_length=48)
-    number = models.IntegerField(blank=True, null=True)
+    number = models.CharField(max_length=10, blank=True, null=True)
     dob = models.DateField(blank=True, null=True)
     followers = models.ManyToManyField(
         "self", symmetrical=False, related_name="user_followers", blank=True)
