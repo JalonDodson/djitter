@@ -8,6 +8,8 @@ authors = ["Jalon Dodson <jalon.dodson@yahoo.com>"]
 python = "^3.9"
 Django = "^3.1.7"
 phonenumbers = "^8.12.19"
+gunicorn = "^20.0.4"
+django-heroku = "^0.3.1"
 
 [tool.poetry.dev-dependencies]
 autopep8 = "^1.5.5"

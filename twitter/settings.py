@@ -128,3 +128,6 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 AUTH_USER_MODEL = 'twitter_user.TwitterUser'
 
 LOGIN_URL = '/login/'
+
+import django_heroku
+django_heroku.settings(locals())
